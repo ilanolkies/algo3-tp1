@@ -35,7 +35,7 @@ int main (int argc, char *argv[]) {
     << "     |                                                                            |." << endl
     << "     |      Para optimizar los Jambo-tubos con distintos algoritmos correr:       |." << endl
     << "     |                                                                            |." << endl
-    << "     |           bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO                           |." << endl
+    << "     |           ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO                         |." << endl
     << "     |                                                                            |." << endl
     << "     |             - RUTA_A_ENTRADA es la ruta aun archivo de entrada válido      |." << endl
     << "     |             - ALGORITMO es un numero del 1 al 3                            |." << endl

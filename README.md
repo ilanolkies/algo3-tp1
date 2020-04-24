@@ -18,3 +18,42 @@ elementos ![formula](https://render.githubusercontent.com/render/math?math=1), !
   <img src="./assets/readme-1.png" />
   <p><i>Ejemplo de instancia del problema de Jambo-tubos.</i></p>
 </div>
+
+## Proyecto
+
+Implementamos 3 algoritmos en C++ para resolver este problema:
+
+- Fuerza bruta
+- Backtracking
+- Programación dinámica
+
+El proyecto está organizado de la sigueinte forma:
+
+- `/src` contiene el código fuente
+- En `/bin` guardaremos los binarios
+- `/input` contiene entradas válidas
+
+## Setup
+
+Para compilar el código fuente:
+
+```
+g++ src/main.cpp -o bin/algo3-tp1
+```
+
+Para ejecutar:
+
+```
+./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
+```
+
+Se puede ejecutar ambos comandos en una sola sentencia:
+```
+g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
+```
+
+Mas ayuda en:
+
+```
+./bin/algo3-tp1 help
+```
