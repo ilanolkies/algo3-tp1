@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,9 +11,29 @@ int invalidInput() {
   return 1;
 }
 
+int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
+  if (w.size() == 0) { //caso base
+    if (R >= 0) return c; // instancia válida
+    return -1; // instancia inválida
+  }
+
+  int wi = w.back();
+  int ri = r.back();
+
+  w.pop_back();
+  r.pop_back();
+
+  return max(
+    _fuerzaBruta(R, w, r, c),
+    _fuerzaBruta(min(R - wi, ri), w, r, c + 1)
+  );
+}
+
 int fuerzaBruta(uint n, uint R, vector<uint> w, vector<uint> r) {
-  cout << "No implementado." << endl;
-  return -1;
+  reverse(w.begin(), w.end());
+  reverse(r.begin(), r.end());
+
+  return _fuerzaBruta(int(R), w, r, 0);
 }
 
 int backtracking(uint n, uint R, vector<uint> w, vector<uint> r) {
@@ -121,6 +142,8 @@ int main (int argc, char *argv[]) {
     default:
       return invalidInput();
   }
+
+  cout << result << endl;
 
   return 0;
 }
