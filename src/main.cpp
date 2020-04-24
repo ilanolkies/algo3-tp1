@@ -14,7 +14,7 @@ int invalidInput() {
 int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
   if (w.size() == 0) { //caso base
     if (R >= 0) return c; // instancia válida
-    return -1; // instancia inválida
+    return 0; // instancia inválida
   }
 
   int wi = w.back();
