@@ -29,10 +29,22 @@ int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
   );
 }
 
+int _fuerzaBruta2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+  return max(
+    _fuerzaBruta2(R, w, r, c, i++),
+    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c++, i++)
+  );
+}
+
 int fuerzaBruta(uint n, uint R, vector<uint> w, vector<uint> r) {
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
 
+  //return _fuerzaBruta(int(R), w, r, 0, 0);
   return _fuerzaBruta(int(R), w, r, 0);
 }
 
