@@ -12,7 +12,7 @@ int invalidInput() {
 }
 
 int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
-  if (w.size() == 0) { //caso base
+  if (w.size() == 0) { // caso base
     if (R >= 0) return c; // instancia válida
     return 0; // instancia inválida
   }
@@ -29,28 +29,42 @@ int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
   );
 }
 
-int _fuerzaBruta2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
+int k = 0; // Variable global para la poda por optimalidad
+int _backTracking(int R, vector<uint> w, vector<uint> r, uint c) {
+  if(w.size() == 0){ // caso base
+    if(R >= 0) return c; // instancia válida
+    return 0; // instancia inválida
   }
+
+  if(R < 0) return 0; // Poda por factibilidad
+
+  if(c >= k) k = c; // Actualizo valor de secuencia mas larga
+  if(c + w.size() < k) return 0; // Poda por optimalidad
+  
+  int wi = w.back();
+  int ri = r.back();
+
+  w.pop_back();
+  r.pop_back();
+
   return max(
-    _fuerzaBruta2(R, w, r, c, i++),
-    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c++, i++)
+    _backTracking(R, w, r, c),
+    _backTracking(min(R - wi, ri), w, r, c + 1)
   );
 }
 
 int fuerzaBruta(uint n, uint R, vector<uint> w, vector<uint> r) {
+
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
 
-  //return _fuerzaBruta(int(R), w, r, 0, 0);
   return _fuerzaBruta(int(R), w, r, 0);
 }
-
 int backtracking(uint n, uint R, vector<uint> w, vector<uint> r) {
-  cout << "No implementado." << endl;
-  return -1;
+  reverse(w.begin(), w.end());
+  reverse(r.begin(), r.end());
+  k = 0;
+  return _backTracking(int(R), w, r, 0);
 }
 
 int programacionDinamica(uint n, uint R, vector<uint> w, vector<uint> r) {
@@ -107,7 +121,7 @@ int main (int argc, char *argv[]) {
   char *input = argv[1];
   uint mode = atoi(argv[2]);
 
-    // lectura del input
+  // lectura del input
   ifstream inputFile;
   inputFile.open(input);
 
@@ -115,8 +129,6 @@ int main (int argc, char *argv[]) {
     return invalidInput();
   }
 
-  // T: cantidad de equipos
-  // P: cantidad de partidos
   uint n, R;
   inputFile >> n >> R;
 
@@ -159,3 +171,44 @@ int main (int argc, char *argv[]) {
 
   return 0;
 }
+
+
+/*
+Rtas de los inputs
+sample  -> 3
+sample2 -> 2
+sample3 -> 3
+sample4 -> 0
+*/
+
+
+
+
+
+
+/*int _fuerzaBruta2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+  return max(
+    _fuerzaBruta2(R, w, r, c, i + 1),
+    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+  );
+}
+int _backTracking2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+
+  if(R < 0) return 0; //  Poda por factibilidad
+
+  if(c >= k) k = c; //  Actualizo valor de secuencia mas larga
+  if(c + (w.size() - i) < k) return 0;  //  Poda por optimalidad
+  
+  return max(
+    _backTracking2(R, w, r, c, i + 1),
+    _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+  );
+}*/
