@@ -52,7 +52,7 @@ int _backTracking(int R, vector<int> w, vector<int> r, int c) {
 
   if(c >= k) k = c; // Actualizo valor de secuencia mas larga
   if(c + w.size() < k) return 0; // Poda por optimalidad
-  
+
   int wi = w.back();
   int ri = r.back();
 
@@ -65,7 +65,7 @@ int _backTracking(int R, vector<int> w, vector<int> r, int c) {
   );
 }
 
-int _backTracking2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
+int _backTracking2(int R, vector<int> w, vector<int> r, int c, int i) {
   if(i == w.size()){
     if(R >= 0) return c;
     return 0;
@@ -75,26 +75,35 @@ int _backTracking2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
 
   if(c >= k) k = c; //  Actualizo valor de secuencia mas larga
   if(c + (w.size() - i) < k) return 0;  //  Poda por optimalidad
-  
+
   return max(
     _backTracking2(R, w, r, c, i + 1),
     _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
   );
 }
 
-int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
-  return _fuerzaBruta2(R, w, r, 0, 0);
+/***********/
 
+int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
 
-  //return _fuerzaBruta(R, w, r, 0);
+  return _fuerzaBruta(R, w, r, 0);
 }
+
+int fuerzaBruta2(int n, int R, vector<int> w, vector<int> r) {
+  return _fuerzaBruta2(R, w, r, 0, 0);
+}
+
 int backtracking(int n, int R, vector<int> w, vector<int> r) {
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
   k = 0;
   return _backTracking(R, w, r, 0);
+}
+
+int backtracking2(int n, int R, vector<int> w, vector<int> r) {
+  return _backTracking2(R, w, r, 0, 0);
 }
 
 int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
@@ -128,14 +137,17 @@ int main (int argc, char *argv[]) {
       << "     |                                                                            |." << endl
       << "     |      Para optimizar los Jambo-tubos con distintos algoritmos correr:       |." << endl
       << "     |                                                                            |." << endl
-      << "     |           ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO                         |." << endl
+      << "     |           ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO MODO                    |." << endl
       << "     |                                                                            |." << endl
       << "     |             - RUTA_A_ENTRADA es la ruta aun archivo de entrada válido      |." << endl
       << "     |             - ALGORITMO es un numero del 1 al 3                            |." << endl
       << "     |                 1: Fuerza bruta                                            |." << endl
       << "     |                 2: Backtracking                                            |." << endl
       << "     |                 3: Programación dinámica                                   |." << endl
-      << "     |                                                                            |." << endl
+      << "     |             - MODO si usa i o retorna resultado                            |." << endl
+      << "     |                    (variacion de implementaciones)                         |." << endl
+      << "     |                    0 o vacio es sin i y reverse                            |." << endl
+      << "     |                    1 es con i                                              |." << endl
       << "     |    ________________________________________________________________________|___" << endl
       << "     |   /                                                                           /." << endl
       << "      \\_/___________________________________________________________________________/." << endl;
@@ -143,13 +155,18 @@ int main (int argc, char *argv[]) {
     return 0;
   }
 
-  if (argc != 3) {
+  if (argc > 4) {
     return invalidInput();
   }
 
   // parametros por linea de comando
   char *input = argv[1];
   int mode = atoi(argv[2]);
+  int mode2 = argc == 4 ? atoi(argv[3]) : 0;
+
+  if (mode2 > 1) {
+    return invalidInput();
+  }
 
   // lectura del input
   ifstream inputFile;
@@ -183,14 +200,25 @@ int main (int argc, char *argv[]) {
 
   int result;
 
-  switch(mode) {
-    case 1:
+  int _mode = mode * 2 + mode2;
+
+  switch(_mode) {
+    case 2:
       result = fuerzaBruta(n, R, w, r);
       break;
-    case 2:
+    case 3:
+      result = fuerzaBruta(n, R, w, r);
+      break;
+    case 4:
       result = backtracking(n, R, w, r);
       break;
-    case 3:
+    case 5:
+      result = backtracking2(n, R, w, r);
+      break;
+    case 6:
+      result = programacionDinamica(n, R, w, r);
+      break;
+    case 7:
       result = programacionDinamica(n, R, w, r);
       break;
     default:
