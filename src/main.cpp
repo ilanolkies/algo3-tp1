@@ -11,7 +11,7 @@ int invalidInput() {
   return 1;
 }
 
-int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
+int _fuerzaBruta(int R, vector<int> w, vector<int> r, int c) {
   if (w.size() == 0) { // caso base
     if (R >= 0) return c; // instancia válida
     return 0; // instancia inválida
@@ -29,8 +29,20 @@ int _fuerzaBruta(int R, vector<uint> w, vector<uint> r, uint c) {
   );
 }
 
+int _fuerzaBruta2(int R, vector<int> w, vector<int> r, int c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+
+  return max(
+    _fuerzaBruta2(R, w, r, c, i + 1),
+    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+  );
+}
+
 int k = 0; // Variable global para la poda por optimalidad
-int _backTracking(int R, vector<uint> w, vector<uint> r, uint c) {
+int _backTracking(int R, vector<int> w, vector<int> r, int c) {
   if(w.size() == 0){ // caso base
     if(R >= 0) return c; // instancia válida
     return 0; // instancia inválida
@@ -53,21 +65,39 @@ int _backTracking(int R, vector<uint> w, vector<uint> r, uint c) {
   );
 }
 
-int fuerzaBruta(uint n, uint R, vector<uint> w, vector<uint> r) {
+int _backTracking2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+
+  if(R < 0) return 0; //  Poda por factibilidad
+
+  if(c >= k) k = c; //  Actualizo valor de secuencia mas larga
+  if(c + (w.size() - i) < k) return 0;  //  Poda por optimalidad
+  
+  return max(
+    _backTracking2(R, w, r, c, i + 1),
+    _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+  );
+}
+
+int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
+  return _fuerzaBruta2(R, w, r, 0, 0);
 
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
 
-  return _fuerzaBruta(int(R), w, r, 0);
+  //return _fuerzaBruta(R, w, r, 0);
 }
-int backtracking(uint n, uint R, vector<uint> w, vector<uint> r) {
+int backtracking(int n, int R, vector<int> w, vector<int> r) {
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
   k = 0;
-  return _backTracking(int(R), w, r, 0);
+  return _backTracking(R, w, r, 0);
 }
 
-int programacionDinamica(uint n, uint R, vector<uint> w, vector<uint> r) {
+int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
   cout << "No implementado." << endl;
   return -1;
 }
@@ -119,7 +149,7 @@ int main (int argc, char *argv[]) {
 
   // parametros por linea de comando
   char *input = argv[1];
-  uint mode = atoi(argv[2]);
+  int mode = atoi(argv[2]);
 
   // lectura del input
   ifstream inputFile;
@@ -129,13 +159,13 @@ int main (int argc, char *argv[]) {
     return invalidInput();
   }
 
-  uint n, R;
+  int n, R;
   inputFile >> n >> R;
 
-  vector<uint> w, r;
+  vector<int> w, r;
 
-  for (uint i = 0; i < n; i++) {
-    uint wi, ri;
+  for (int i = 0; i < n; i++) {
+    int wi, ri;
     inputFile >> wi >> ri;
 
     w.push_back(wi);
@@ -145,10 +175,10 @@ int main (int argc, char *argv[]) {
   cout << "n: " << n << endl;
   cout << "R: " << R << endl;
   cout << "w: [";
-  for (uint i = 0; i < n-1; i++) cout << w[i] << ", ";
+  for (int i = 0; i < n-1; i++) cout << w[i] << ", ";
   cout << w[n-1] << "]" << endl;
   cout << "r: [";
-  for (uint i = 0; i < n-1; i++) cout << r[i] << ", ";
+  for (int i = 0; i < n-1; i++) cout << r[i] << ", ";
   cout << r[n-1] << "]" << endl;
 
   int result;
@@ -180,35 +210,3 @@ sample2 -> 2
 sample3 -> 3
 sample4 -> 0
 */
-
-
-
-
-
-
-/*int _fuerzaBruta2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
-  }
-  return max(
-    _fuerzaBruta2(R, w, r, c, i + 1),
-    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
-  );
-}
-int _backTracking2(int R, vector<uint> w, vector<uint> r, uint c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
-  }
-
-  if(R < 0) return 0; //  Poda por factibilidad
-
-  if(c >= k) k = c; //  Actualizo valor de secuencia mas larga
-  if(c + (w.size() - i) < k) return 0;  //  Poda por optimalidad
-  
-  return max(
-    _backTracking2(R, w, r, c, i + 1),
-    _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
-  );
-}*/
