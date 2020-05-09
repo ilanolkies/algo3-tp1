@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <map>
 
 using namespace std;
 
@@ -82,6 +83,27 @@ int _backTracking2(int R, vector<int> w, vector<int> r, int c, int i) {
   );
 }
 
+map<int,int> M;
+int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+  
+  int newR = min(R - w[i], r[i]); //Resistencia que me queda si agrego el elemento i.
+  
+  if(M.count(newR) > 0){ //Si esta definido
+    if(M[newR] > c) return c;
+  }
+     
+  M[newR] = c;
+
+  return max(
+    _programacionDinamica2(R, w, r, c, i + 1),
+    _programacionDinamica2(newR, w, r, c + 1, i + 1)
+  );
+}
+
 /***********/
 
 int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
@@ -107,8 +129,11 @@ int backtracking2(int n, int R, vector<int> w, vector<int> r) {
 }
 
 int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
-  cout << "No implementado." << endl;
-  return -1;
+  return _programacionDinamica2(R, w, r, 0, 0);
+}
+
+int programacionDinamica2(int n, int R, vector<int> w, vector<int> r) {
+  return _programacionDinamica2(R, w, r, 0, 0);
 }
 
 int main (int argc, char *argv[]) {
