@@ -33,7 +33,7 @@ El proyecto está organizado de la sigueinte forma:
 - En `/bin` guardaremos los binarios
 - `/input` contiene entradas válidas
 
-## Setup
+## Algoritmos
 
 Para compilar el código fuente:
 
@@ -48,17 +48,57 @@ Para ejecutar:
 ```
 
 Se puede ejecutar ambos comandos en una sola sentencia:
+
 ```
 g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 ```
 
 Ejemplo:
+
 ```
 g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 ./input/sample2 3 0
 ```
+
+## Experimentacion
+
+Para usar Python v3.6.5
+
+1. Instalar `pyenv` (una sola vez)
+
+  _Como instalar `pyenv`_: https://github.com/pyenv/pyenv#installation
+
+  Mac:
+
+  ```
+  brew update
+  brew install pyenv
+  eval "$(pyenv init -)"
+  ```
+
+2. Instalar v3.6.5 (una sola vez)
+
+  ```
+  pyenv install 3.6.5
+  ```
+
+3. Activar v3.6.5 (cada nueva consola debe ejecutarlo una vez)
+
+  ```
+  pyenv install 3.6.5
+  ```
+
+4. Instalar dependencias
+
+  ```
+  pip install -r requirements.txt
+  ```
+
+## Ayuda
 
 Mas ayuda en:
 
 ```
 ./bin/algo3-tp1 help
 ```
+
+
