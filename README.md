@@ -100,6 +100,16 @@ Para usar Python v3.6.5
   pip install -r requirements.txt
   ```
 
+## Scripts
+
+- `python ./scripts/aleatorio.py` crea 100 instancias aleatorias en `./instancias/aleatorio`
+
+  Parametros:
+
+  | $R$ | $n$ | $w$ | $r$ |
+  | - | - | - | - |
+  | De $500$ a $1000$ | 100 | $w_i$ de $1$ a $11$ $\forall i = 1 \dots n$ | $r_i$ de $1$ a $11$ $\forall i = 1 \dots n$ |
+
 ## Ayuda
 
 Mas ayuda en:
