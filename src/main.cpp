@@ -143,7 +143,6 @@ int _backTracking2(int R, vector<int> w, vector<int> r, int c, int i) {
 int backtracking(int n, int R, vector<int> w, vector<int> r) {
   reverse(w.begin(), w.end());
   reverse(r.begin(), r.end());
-  k = 0;
   return _backTracking(R, w, r, 0);
 }
 
@@ -152,6 +151,35 @@ int backtracking2(int n, int R, vector<int> w, vector<int> r) {
 }
 
 /* Programacion dinamica */
+int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int> m) {
+  if(w.size() == 0){ // caso base
+    if(R >= 0) return c; // instancia valida
+    return 0; // instancia invalida
+  }
+
+  if(R < 0) return 0; // poda por factibilidad
+  if(c + w.size() < k) return 0; // poda por optimalidad
+
+  int wi = w.back();
+  int ri = r.back();
+
+  int _R = min(R - wi, ri); // cota de resistencia
+
+  if(m[_R] > c) return c; // corte si un resultado ya es mejor para la nueva resistencia
+
+  m[_R] = c;
+
+  if(c >= k) k = c; // actualizacion de secuencia mas optima
+
+  w.pop_back();
+  r.pop_back();
+
+  return max(
+    _backTracking(R, w, r, c),
+    _backTracking(min(R - wi, ri), w, r, c + 1)
+  );
+}
+
 map<int,int> M;
 
 int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
@@ -178,6 +206,10 @@ int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
 }
 
 int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
+  reverse(w.begin(), w.end());
+  reverse(r.begin(), r.end());
+  vector<int> m(R, 0);
+  return _programacionDinamica(R, w, r, 0, m);
 }
 
 int programacionDinamica2(int n, int R, vector<int> w, vector<int> r) {
@@ -269,7 +301,6 @@ int main (int argc, char *argv[]) {
       result = backtracking2(n, R, w, r);
       break;
     case 6:
-      return invalidInput();
       result = programacionDinamica(n, R, w, r);
       break;
     case 7:
