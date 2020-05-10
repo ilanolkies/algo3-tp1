@@ -51,10 +51,15 @@ int invalidInput() {
   return 1;
 }
 
+/*************/
+/* algritmos */
+/*************/
+
+/* Fuerza bruta */
 int _fuerzaBruta(int R, vector<int> w, vector<int> r, int c) {
   if (w.size() == 0) { // caso base
-    if (R >= 0) return c; // instancia válida
-    return 0; // instancia inválida
+    if (R >= 0) return c; // instancia valida
+    return 0; // instancia invalida
   }
 
   int wi = w.back();
@@ -81,17 +86,30 @@ int _fuerzaBruta2(int R, vector<int> w, vector<int> r, int c, int i) {
   );
 }
 
-int k = 0; // Variable global para la poda por optimalidad
+int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
+  reverse(w.begin(), w.end());
+  reverse(r.begin(), r.end());
+
+  return _fuerzaBruta(R, w, r, 0);
+}
+
+int fuerzaBruta2(int n, int R, vector<int> w, vector<int> r) {
+  return _fuerzaBruta2(R, w, r, 0, 0);
+}
+
+/* Backtracking */
+int k = 0; // largo de secuencia mas optima encontrada
+
 int _backTracking(int R, vector<int> w, vector<int> r, int c) {
   if(w.size() == 0){ // caso base
-    if(R >= 0) return c; // instancia válida
-    return 0; // instancia inválida
+    if(R >= 0) return c; // instancia valida
+    return 0; // instancia invalida
   }
 
-  if(R < 0) return 0; // Poda por factibilidad
+  if(R < 0) return 0; // poda por factibilidad
+  if(c + w.size() < k) return 0; // poda por optimalidad
 
-  if(c >= k) k = c; // Actualizo valor de secuencia mas larga
-  if(c + w.size() < k) return 0; // Poda por optimalidad
+  if(c >= k) k = c; // actualizacion de secuencia mas optima
 
   int wi = w.back();
   int ri = r.back();
@@ -111,49 +129,15 @@ int _backTracking2(int R, vector<int> w, vector<int> r, int c, int i) {
     return 0;
   }
 
-  if(R < 0) return 0; //  Poda por factibilidad
+  if(R < 0) return 0; //  poda por factibilidad
+  if(c + (w.size() - i) < k) return 0;  // poda por optimalidad
 
-  if(c >= k) k = c; //  Actualizo valor de secuencia mas larga
-  if(c + (w.size() - i) < k) return 0;  //  Poda por optimalidad
+  if(c >= k) k = c; // actualizacion de secuencia mas optima
 
   return max(
     _backTracking2(R, w, r, c, i + 1),
     _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
   );
-}
-
-map<int,int> M;
-int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
-  }
-  
-  int newR = min(R - w[i], r[i]); //Resistencia que me queda si agrego el elemento i.
-  
-  if(M.count(newR) > 0){ //Si esta definido
-    if(M[newR] > c) return c;
-  }
-     
-  M[newR] = c;
-
-  return max(
-    _programacionDinamica2(R, w, r, c, i + 1),
-    _programacionDinamica2(newR, w, r, c + 1, i + 1)
-  );
-}
-
-/***********/
-
-int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
-  reverse(w.begin(), w.end());
-  reverse(r.begin(), r.end());
-
-  return _fuerzaBruta(R, w, r, 0);
-}
-
-int fuerzaBruta2(int n, int R, vector<int> w, vector<int> r) {
-  return _fuerzaBruta2(R, w, r, 0, 0);
 }
 
 int backtracking(int n, int R, vector<int> w, vector<int> r) {
@@ -167,8 +151,33 @@ int backtracking2(int n, int R, vector<int> w, vector<int> r) {
   return _backTracking2(R, w, r, 0, 0);
 }
 
+/* Programacion dinamica */
+map<int,int> M;
+
+int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
+  if(i == w.size()){
+    if(R >= 0) return c;
+    return 0;
+  }
+
+  if(R < 0) return 0; //  poda por factibilidad
+  if(c + (w.size() - i) < k) return 0;  // poda por optimalidad
+
+  int _R = min(R - w[i], r[i]); // cota de resistencia
+
+  if(M[_R] > c) return c; // corte si un resultado ya es mejor para la nueva resistencia
+
+  M[_R] = c;
+
+  if(c >= k) k = c; // actualizacion de secuencia mas optima
+
+  return max(
+    _programacionDinamica2(R, w, r, c, i + 1),
+    _programacionDinamica2(_R, w, r, c + 1, i + 1)
+  );
+}
+
 int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
-  return _programacionDinamica2(R, w, r, 0, 0);
 }
 
 int programacionDinamica2(int n, int R, vector<int> w, vector<int> r) {
@@ -188,16 +197,34 @@ int main (int argc, char *argv[]) {
     return invalidInput();
   }
 
-  // parametros por linea de comando
+  /* parametros por linea de comando */
+
+  /* path a la entrada */
   char *input = argv[1];
+
+  /* modo */
   int mode = atoi(argv[2]);
+  /*
+    - 1 -> fuerza bruta
+    - 2 -> backtracking
+    - 3 -> dinamica
+  */
+
+  /* segundo modo */
   int mode2 = argc == 4 ? atoi(argv[3]) : 0;
+  /*
+    - 0 o vacio -> recursion sin indexacion
+    - 1 -> recursion con indexacion
+  */
 
   if (mode2 > 1) {
     return invalidInput();
   }
 
-  // lectura del input
+  /* lectura del input */
+  int n, R;
+  vector<int> w, r;
+
   ifstream inputFile;
   inputFile.open(input);
 
@@ -205,10 +232,7 @@ int main (int argc, char *argv[]) {
     return invalidInput();
   }
 
-  int n, R;
   inputFile >> n >> R;
-
-  vector<int> w, r;
 
   for (int i = 0; i < n; i++) {
     int wi, ri;
@@ -218,25 +242,25 @@ int main (int argc, char *argv[]) {
     r.push_back(ri);
   }
 
-  cout << "n: " << n << endl;
-  cout << "R: " << R << endl;
-  cout << "w: [";
+  cout << "Entrada:" << endl;
+  cout << "n := " << n << endl;
+  cout << "R := " << R << endl;
+  cout << "w := [";
   for (int i = 0; i < n-1; i++) cout << w[i] << ", ";
   cout << w[n-1] << "]" << endl;
-  cout << "r: [";
+  cout << "r := [";
   for (int i = 0; i < n-1; i++) cout << r[i] << ", ";
   cout << r[n-1] << "]" << endl;
 
+  /* ejecucion */
   int result;
 
-  int _mode = mode * 2 + mode2;
-
-  switch(_mode) {
+  switch(mode * 2 + mode2) {
     case 2:
       result = fuerzaBruta(n, R, w, r);
       break;
     case 3:
-      result = fuerzaBruta(n, R, w, r);
+      result = fuerzaBruta2(n, R, w, r);
       break;
     case 4:
       result = backtracking(n, R, w, r);
@@ -245,15 +269,17 @@ int main (int argc, char *argv[]) {
       result = backtracking2(n, R, w, r);
       break;
     case 6:
+      return invalidInput();
       result = programacionDinamica(n, R, w, r);
       break;
     case 7:
-      result = programacionDinamica(n, R, w, r);
+      result = programacionDinamica2(n, R, w, r);
       break;
     default:
       return invalidInput();
   }
 
+  cout << "Salida:" << endl;
   cout << result << endl;
 
   return 0;
