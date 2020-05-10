@@ -74,7 +74,7 @@ int _fuerzaBruta(int R, vector<int> w, vector<int> r, int c) {
   );
 }
 
-int _fuerzaBruta2(int R, vector<int> w, vector<int> r, int c, int i) {
+int _fuerzaBruta2(int R, vector<int> &w, vector<int> &r, int c, int i) {
   if(i == w.size()){
     if(R >= 0) return c;
     return 0;
@@ -123,7 +123,7 @@ int _backTracking(int R, vector<int> w, vector<int> r, int c) {
   );
 }
 
-int _backTracking2(int R, vector<int> w, vector<int> r, int c, int i) {
+int _backTracking2(int R, vector<int> &w, vector<int> &r, int c, int i) {
   if(i == w.size()){
     if(R >= 0) return c;
     return 0;
@@ -151,7 +151,7 @@ int backtracking2(int n, int R, vector<int> w, vector<int> r) {
 }
 
 /* Programacion dinamica */
-int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int> m) {
+int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int> &m) {
   if(w.size() == 0){ // caso base
     if(R >= 0) return c; // instancia valida
     return 0; // instancia invalida
@@ -182,7 +182,7 @@ int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int
 
 map<int,int> M;
 
-int _programacionDinamica2(int R, vector<int> w, vector<int> r, int c, int i) {
+int _programacionDinamica2(int R, vector<int> &w, vector<int> &r, int c, int i) {
   if(i == w.size()){
     if(R >= 0) return c;
     return 0;
