@@ -52,6 +52,11 @@ Se puede ejecutar ambos comandos en una sola sentencia:
 g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 ```
 
+Ejemplo:
+```
+g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 ./input/sample2 3 0
+```
+
 Mas ayuda en:
 
 ```
