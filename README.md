@@ -84,10 +84,17 @@ Para usar Python v3.6.5
 3. Activar v3.6.5 (cada nueva consola debe ejecutarlo una vez)
 
   ```
-  pyenv install 3.6.5
+  pyenv global 3.6.5
   ```
 
-4. Instalar dependencias
+4. Checkear con
+
+  ```
+  $ python --version
+  Python 3.6.5
+  ```
+
+5. Instalar dependencias
 
   ```
   pip install -r requirements.txt
@@ -100,5 +107,3 @@ Mas ayuda en:
 ```
 ./bin/algo3-tp1 help
 ```
-
-
