@@ -165,7 +165,7 @@ int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int
 
   int _R = min(R - wi, ri); // cota de resistencia
 
-  if(m[_R] > c) return c; // corte si un resultado ya es mejor para la nueva resistencia
+  if(m[_R] > c + w.size()) return c; // corte si un resultado ya es mejor para la nueva resistencia
 
   m[_R] = c;
 
@@ -175,8 +175,8 @@ int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int
   r.pop_back();
 
   return max(
-    _backTracking(R, w, r, c),
-    _backTracking(min(R - wi, ri), w, r, c + 1)
+    _programacionDinamica(R, w, r, c, m),
+    _programacionDinamica(min(R - wi, ri), w, r, c + 1, m)
   );
 }
 
@@ -193,7 +193,7 @@ int _programacionDinamica2(int R, vector<int> &w, vector<int> &r, int c, int i) 
 
   int _R = min(R - w[i], r[i]); // cota de resistencia
 
-  if(M[_R] > c) return c; // corte si un resultado ya es mejor para la nueva resistencia
+  if(M[_R] > c + w.size() - i) return c; // corte si un resultado ya es mejor para la nueva resistencia
 
   M[_R] = c;
 

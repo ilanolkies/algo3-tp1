@@ -84,6 +84,7 @@ Para usar Python v3.6.5
 3. Activar v3.6.5 (cada nueva consola debe ejecutarlo una vez)
 
   ```
+  eval "$(pyenv init -)"
   pyenv global 3.6.5
   ```
 
@@ -114,6 +115,14 @@ Parametros:
 - ![formula](https://render.githubusercontent.com/render/math?math=n=100)
 - ![formula](https://render.githubusercontent.com/render/math?math=w_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
 - ![formula](https://render.githubusercontent.com/render/math?math=r_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
+
+## Notebooks
+
+Abrir notebooks con
+
+```
+jupyter notebook notebooks/
+```
 
 ## Ayuda
 
