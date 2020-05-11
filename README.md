@@ -124,6 +124,8 @@ Abrir notebooks con
 jupyter notebook notebooks/
 ```
 
+- `Aleatorio` prueba con instancias aleatorias.
+
 ## Ayuda
 
 Mas ayuda en:
