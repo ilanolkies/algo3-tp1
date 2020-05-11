@@ -103,13 +103,18 @@ Para usar Python v3.6.5
 
 ## Scripts
 
-- `python ./scripts/aleatorio.py` crea 100 instancias aleatorias en `./instancias/aleatorio`
+Se corren desde el root del repo.
 
-  Parametros:
+### Aleatorio
 
-  | $R$ | $n$ | $w$ | $r$ |
-  | - | - | - | - |
-  | De $500$ a $1000$ | 100 | $w_i$ de $1$ a $11$ $\forall i = 1 \dots n$ | $r_i$ de $1$ a $11$ $\forall i = 1 \dots n$ |
+`python ./scripts/aleatorio.py` crea 100 instancias aleatorias en `./instancias/aleatorio`
+
+Parametros:
+
+- ![formula](https://render.githubusercontent.com/render/math?math=R) de 500 a 1000
+- ![formula](https://render.githubusercontent.com/render/math?math=n=100)
+- ![formula](https://render.githubusercontent.com/render/math?math=w_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
+- ![formula](https://render.githubusercontent.com/render/math?math=r_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
 
 ## Notebooks
 
