@@ -84,6 +84,7 @@ Para usar Python v3.6.5
 3. Activar v3.6.5 (cada nueva consola debe ejecutarlo una vez)
 
   ```
+  eval "$(pyenv init -)"
   pyenv global 3.6.5
   ```
 
@@ -109,6 +110,14 @@ Para usar Python v3.6.5
   | $R$ | $n$ | $w$ | $r$ |
   | - | - | - | - |
   | De $500$ a $1000$ | 100 | $w_i$ de $1$ a $11$ $\forall i = 1 \dots n$ | $r_i$ de $1$ a $11$ $\forall i = 1 \dots n$ |
+
+## Notebooks
+
+Abrir notebooks con
+
+```
+jupyter notebook notebooks/
+```
 
 ## Ayuda
 
