@@ -54,166 +54,50 @@ int invalidInput() {
 /*************/
 /* algritmos */
 /*************/
-
+vector<int> w;
+vector<int> r;
 /* Fuerza bruta */
-int _fuerzaBruta(int R, vector<int> w, vector<int> r, int c) {
-  if (w.size() == 0) { // caso base
-    if (R >= 0) return c; // instancia valida
-    return 0; // instancia invalida
-  }
-
-  int wi = w.back();
-  int ri = r.back();
-
-  w.pop_back();
-  r.pop_back();
-
-  return max(
-    _fuerzaBruta(R, w, r, c),
-    _fuerzaBruta(min(R - wi, ri), w, r, c + 1)
-  );
-}
-
-int _fuerzaBruta2(int R, vector<int> &w, vector<int> &r, int c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
+int FB(int R, int i, int c) {
+  if(i == w.size()){  // caso base
+    if(R >= 0) return c; // instancia válida
     return 0;
   }
 
   return max(
-    _fuerzaBruta2(R, w, r, c, i + 1),
-    _fuerzaBruta2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+    FB(R, i + 1, c),
+    FB(min(R - w[i], r[i]), i + 1, c + 1)
   );
-}
-
-int fuerzaBruta(int n, int R, vector<int> w, vector<int> r) {
-  reverse(w.begin(), w.end());
-  reverse(r.begin(), r.end());
-
-  return _fuerzaBruta(R, w, r, 0);
-}
-
-int fuerzaBruta2(int n, int R, vector<int> w, vector<int> r) {
-  return _fuerzaBruta2(R, w, r, 0, 0);
 }
 
 /* Backtracking */
 int k = 0; // largo de secuencia mas optima encontrada
 
-int _backTracking(int R, vector<int> w, vector<int> r, int c) {
-  if(w.size() == 0){ // caso base
-    if(R >= 0) return c; // instancia valida
-    return 0; // instancia invalida
-  }
-
-  if(R < 0) return 0; // poda por factibilidad
-  if(c + w.size() < k) return 0; // poda por optimalidad
-
-  if(c >= k) k = c; // actualizacion de secuencia mas optima
-
-  int wi = w.back();
-  int ri = r.back();
-
-  w.pop_back();
-  r.pop_back();
-
-  return max(
-    _backTracking(R, w, r, c),
-    _backTracking(min(R - wi, ri), w, r, c + 1)
-  );
-}
-
-int _backTracking2(int R, vector<int> &w, vector<int> &r, int c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
-  }
-
+int BT(int R, int i, int c) {
   if(R < 0) return 0; //  poda por factibilidad
+
+  if(i == w.size()) return c; // caso base instancia válida
+
   if(c + (w.size() - i) < k) return 0;  // poda por optimalidad
 
   if(c >= k) k = c; // actualizacion de secuencia mas optima
 
   return max(
-    _backTracking2(R, w, r, c, i + 1),
-    _backTracking2(min(R - w[i], r[i]), w, r, c + 1, i + 1)
+    BT(R, i + 1, c),
+    BT(min(R - w[i], r[i]), i + 1, c + 1)
   );
-}
-
-int backtracking(int n, int R, vector<int> w, vector<int> r) {
-  reverse(w.begin(), w.end());
-  reverse(r.begin(), r.end());
-  return _backTracking(R, w, r, 0);
-}
-
-int backtracking2(int n, int R, vector<int> w, vector<int> r) {
-  return _backTracking2(R, w, r, 0, 0);
 }
 
 /* Programacion dinamica */
-int _programacionDinamica(int R, vector<int> w, vector<int> r, int c, vector<int> &m) {
-  if(w.size() == 0){ // caso base
-    if(R >= 0) return c; // instancia valida
-    return 0; // instancia invalida
-  }
-
+vector<vector<int> > M;
+int PD(int R,  int i, int c) {
   if(R < 0) return 0; // poda por factibilidad
-  if(c + w.size() < k) return 0; // poda por optimalidad
+  if(i == w.size()) return c; // caso base instancia válida
 
-  int wi = w.back();
-  int ri = r.back();
-
-  int _R = min(R - wi, ri); // cota de resistencia
-
-  if(m[_R] > c + w.size()) return c; // corte si un resultado ya es mejor para la nueva resistencia
-
-  m[_R] = c;
-
-  if(c >= k) k = c; // actualizacion de secuencia mas optima
-
-  w.pop_back();
-  r.pop_back();
-
-  return max(
-    _programacionDinamica(R, w, r, c, m),
-    _programacionDinamica(min(R - wi, ri), w, r, c + 1, m)
+  if(M[i][R] <= c) M[i][R] = max(
+    PD(R, i + 1, c),
+    PD(min(R - w[i], r[i]), i + 1, c + 1)
   );
-}
-
-map<int,int> M;
-
-int _programacionDinamica2(int R, vector<int> &w, vector<int> &r, int c, int i) {
-  if(i == w.size()){
-    if(R >= 0) return c;
-    return 0;
-  }
-
-  if(R < 0) return 0; //  poda por factibilidad
-  if(c + (w.size() - i) < k) return 0;  // poda por optimalidad
-
-  int _R = min(R - w[i], r[i]); // cota de resistencia
-
-  if(M[_R] > c + w.size() - i) return c; // corte si un resultado ya es mejor para la nueva resistencia
-
-  M[_R] = c;
-
-  if(c >= k) k = c; // actualizacion de secuencia mas optima
-
-  return max(
-    _programacionDinamica2(R, w, r, c, i + 1),
-    _programacionDinamica2(_R, w, r, c + 1, i + 1)
-  );
-}
-
-int programacionDinamica(int n, int R, vector<int> w, vector<int> r) {
-  reverse(w.begin(), w.end());
-  reverse(r.begin(), r.end());
-  vector<int> m(R, 0);
-  return _programacionDinamica(R, w, r, 0, m);
-}
-
-int programacionDinamica2(int n, int R, vector<int> w, vector<int> r) {
-  return _programacionDinamica2(R, w, r, 0, 0);
+  return M[i][R];
 }
 
 int main (int argc, char *argv[]) {
@@ -255,7 +139,6 @@ int main (int argc, char *argv[]) {
 
   /* lectura del input */
   int n, R;
-  vector<int> w, r;
 
   ifstream inputFile;
   inputFile.open(input);
@@ -289,22 +172,24 @@ int main (int argc, char *argv[]) {
 
   switch(mode * 2 + mode2) {
     case 2:
-      result = fuerzaBruta(n, R, w, r);
+      result = FB(R, 0, 0);
       break;
     case 3:
-      result = fuerzaBruta2(n, R, w, r);
+      result = FB(R, 0, 0);
       break;
     case 4:
-      result = backtracking(n, R, w, r);
+      result = BT(R, 0, 0);
       break;
     case 5:
-      result = backtracking2(n, R, w, r);
+      result = BT(R, 0, 0);
       break;
     case 6:
-      result = programacionDinamica(n, R, w, r);
+      M = vector<vector<int> >(n+1, vector<int>(R+1, 0));
+      result = PD(R, 0, 0);
       break;
     case 7:
-      result = programacionDinamica2(n, R, w, r);
+      M = vector<vector<int> >(n+1, vector<int>(R + 1, 0));
+      result = PD(R, 0, 0);
       break;
     default:
       return invalidInput();
