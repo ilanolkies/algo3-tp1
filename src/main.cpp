@@ -89,6 +89,48 @@ int BT(int R, int i, int c) {
 
 /* Programacion dinamica */
 vector<vector<int> > M;
+
+void printM() {
+  for(int i = 0; i < M.size(); i++) {
+    for(int j = 0; j < M[i].size(); j++) {
+      cout << M[i][j] << "  ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+  cout << endl;
+}
+
+int PDit(int R) {
+  M = vector<vector<int> >(w.size() + 1, vector<int>(R + 1, -1));
+  M[0][0] = 0;
+  for(int i = 1; i < w.size() + 1; i++) {
+    for(int j = R; j >= 0; j--) {
+      if (M[i-1][j] > -1) {
+        // si pongo i-1-esimo
+
+        // la resistencia seria
+        int m = min(
+          (R - j) - w[i - 1],
+          r[i - 1]
+        );
+
+        if(
+          m >= 0 && // si es positiva entra
+          M[i][R - m] < M[i-1][j] + 1 // si la cantidad es mayor a otro camino con la misma resistenca
+        )
+          M[i][R - m] = M[i-1][j] + 1; // lo cargo
+
+        // si no pongo i-1-esimo
+        if(M[i-1][j] > M[i][j]) // si la resistencia es mayor a la de otro camino
+          M[i][j] = M[i-1][j]; // lo cargo
+      }
+    }
+  }
+
+  return *max_element(M[w.size()].begin(), M[w.size()].end()); // retorno el mejor camino
+}
+
 int PD(int R,  int i, int c) {
   if(R < 0) return 0; // poda por factibilidad
   if(i == w.size()) return c; // caso base instancia válida
@@ -189,7 +231,7 @@ int main (int argc, char *argv[]) {
       break;
     case 7:
       M = vector<vector<int> >(n+1, vector<int>(R + 1, 0));
-      result = PD(R, 0, 0);
+      result = PDit(R);
       break;
     default:
       return invalidInput();
