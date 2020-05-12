@@ -135,10 +135,12 @@ int PD(int R,  int i, int c) {
   if(R < 0) return 0; // poda por factibilidad
   if(i == w.size()) return c; // caso base instancia válida
 
-  if(M[i][R] <= c) M[i][R] = max(
-    PD(R, i + 1, c),
-    PD(min(R - w[i], r[i]), i + 1, c + 1)
-  );
+  if(M[i][R] <= c + w.size() - i){
+    M[i][R] = max(
+      PD(R, i + 1, c),
+      PD(min(R - w[i], r[i]), i + 1, c + 1)
+    );
+  }
   return M[i][R];
 }
 
