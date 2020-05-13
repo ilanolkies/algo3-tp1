@@ -56,9 +56,10 @@ int invalidInput() {
 /*************/
 vector<int> w;
 vector<int> r;
+int n;
 /* Fuerza bruta */
 int FB(int R, int i, int c) {
-  if(i == w.size()){  // caso base
+  if(i == n){  // caso base
     if(R >= 0) return c; // instancia válida
     return 0;
   }
@@ -75,9 +76,9 @@ int k = 0; // largo de secuencia mas optima encontrada
 int BT(int R, int i, int c) {
   if(R < 0) return 0; //  poda por factibilidad
 
-  if(i == w.size()) return c; // caso base instancia válida
+  if(i == n) return c; // caso base instancia válida
 
-  if(c + (w.size() - i) < k) return 0;  // poda por optimalidad
+  if(c + (n - i) < k) return 0;  // poda por optimalidad
 
   if(c >= k) k = c; // actualizacion de secuencia mas optima
 
@@ -131,14 +132,16 @@ int PDit(int R) {
   return *max_element(M[w.size()].begin(), M[w.size()].end()); // retorno el mejor camino
 }
 
-int PD(int R,  int i, int c) {
-  if(R < 0) return 0; // poda por factibilidad
-  if(i == w.size()) return c; // caso base instancia válida
+const int UNDEFINED = -1;
+const int MENOS_INFTY = -999999999;
+int PD(int R,  int i) {
+  if(R < 0) return MENOS_INFTY; // instancia inválida
+  if(i == n) return 0; // caso base instancia válida
 
-  if(M[i][R] <= c + w.size() - i){
+  if(M[i][R] == UNDEFINED){
     M[i][R] = max(
-      PD(R, i + 1, c),
-      PD(min(R - w[i], r[i]), i + 1, c + 1)
+      PD(R, i + 1),
+      1 + PD(min(R - w[i], r[i]), i + 1)
     );
   }
   return M[i][R];
@@ -182,7 +185,7 @@ int main (int argc, char *argv[]) {
   }
 
   /* lectura del input */
-  int n, R;
+  int R;
 
   ifstream inputFile;
   inputFile.open(input);
@@ -228,11 +231,11 @@ int main (int argc, char *argv[]) {
       result = BT(R, 0, 0);
       break;
     case 6:
-      M = vector<vector<int> >(n+1, vector<int>(R+1, 0));
-      result = PD(R, 0, 0);
+      M = vector<vector<int> >(n, vector<int>(R+1, -1));
+      result = PD(R, 0);
       break;
     case 7:
-      M = vector<vector<int> >(n+1, vector<int>(R + 1, 0));
+      M = vector<vector<int> >(n+1, vector<int>(R + 1, -1));
       result = PDit(R);
       break;
     default:
