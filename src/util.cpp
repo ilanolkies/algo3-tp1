@@ -41,3 +41,14 @@ int invalidInput() {
   printf("Formato de parametros inválido. Mas ayuda en:\n\n    ./algo3-tp1 help\n\n");
   return 1;
 }
+
+void printM() {
+  for(int i = 0; i < M.size(); i++) {
+    for(int j = 0; j < M[i].size(); j++) {
+      cout << M[i][j] << "  ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+  cout << endl;
+}
