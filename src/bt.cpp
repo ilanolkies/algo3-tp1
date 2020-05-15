@@ -14,23 +14,12 @@ int bt(int h, int i, int c) {
   );
 }
 
-int btSinFactibilidad(int h, int i, int c) {
-  if(c + (n - i) < k) return 0;  // poda por optimalidad
+int bt_mod(int h, int i, int c) {
 
-  if(i == n) return c; // caso base instancia válida
+  if(poda_factibilidad && h < 0) return 0; // poda por factibilidad
+  if(poda_optimalidad && c + (n - i) < k) return 0; // poda por optimalidad
 
-  if(c >= k) k = c; // actualizacion de secuencia mas optima
-
-  return max(
-    bt(h, i + 1, c),
-    bt(min(h - w[i], r[i]), i + 1, c + 1)
-  );
-}
-
-int btSinOptimalidad(int h, int i, int c) {
-  if(h < 0) return 0; //  poda por factibilidad
-
-  if(i == n) return c; // caso base instancia válida
+  if(i == n && h >= 0) return c; // instancia valida
 
   if(c >= k) k = c; // actualizacion de secuencia mas optima
 
@@ -39,3 +28,4 @@ int btSinOptimalidad(int h, int i, int c) {
     bt(min(h - w[i], r[i]), i + 1, c + 1)
   );
 }
+

@@ -66,11 +66,24 @@ int main (int argc, char *argv[]) {
       result = fb(R, 0, 0);
       break;
     case 2:
+      k = 0;
       result = bt(R, 0, 0);
       break;
     case 3:
       M = vector<vector<int> >(n, vector<int>(R+1, UNDEF));
       result = pd(R, 0);
+      break;
+    case 4:
+      k = 0;
+      poda_factibilidad = true;
+      poda_optimalidad  = false;
+      result = bt_mod(R, 0, 0); // solo poda por factibilidad
+      break;
+    case 5:
+      k = 0;
+      poda_factibilidad = false;
+      poda_optimalidad  = true;
+      result = bt_mod(R, 0, 0); // solo poda por optimalidad
       break;
     default:
       return invalidInput();
