@@ -156,7 +156,7 @@ int main (int argc, char *argv[]) {
     return help();
   }
 
-  if (argc > 4) {
+  if (argc > 3) {
     return invalidInput();
   }
 
@@ -165,24 +165,13 @@ int main (int argc, char *argv[]) {
   /* path a la entrada */
   char *input = argv[1];
 
-  /* modo */
-  int mode = atoi(argv[2]);
-  /*
+  /* modo
     - 1 -> fuerza bruta
     - 2 -> backtracking
     - 3 -> dinamica
   */
+  int mode = atoi(argv[2]);
 
-  /* segundo modo */
-  int mode2 = argc == 4 ? atoi(argv[3]) : 0;
-  /*
-    - 0 o vacio -> recursion sin indexacion
-    - 1 -> recursion con indexacion
-  */
-
-  if (mode2 > 1) {
-    return invalidInput();
-  }
 
   /* lectura del input */
   int R;
@@ -204,6 +193,7 @@ int main (int argc, char *argv[]) {
     r.push_back(ri);
   }
 
+  /* print entrada */
   cout << "Entrada:" << endl;
   cout << "n := " << n << endl;
   cout << "R := " << R << endl;
@@ -217,26 +207,16 @@ int main (int argc, char *argv[]) {
   /* ejecucion */
   int result;
 
-  switch(mode * 2 + mode2) {
-    case 2:
+  switch(mode) {
+    case 1:
       result = FB(R, 0, 0);
+      break;
+    case 2:
+      result = BT(R, 0, 0);
       break;
     case 3:
-      result = FB(R, 0, 0);
-      break;
-    case 4:
-      result = BT(R, 0, 0);
-      break;
-    case 5:
-      result = BT(R, 0, 0);
-      break;
-    case 6:
       M = vector<vector<int> >(n, vector<int>(R+1, -1));
       result = PD(R, 0);
-      break;
-    case 7:
-      M = vector<vector<int> >(n+1, vector<int>(R + 1, -1));
-      result = PDit(R);
       break;
     default:
       return invalidInput();
@@ -247,12 +227,3 @@ int main (int argc, char *argv[]) {
 
   return 0;
 }
-
-
-/*
-Rtas de los inputs
-sample  -> 3
-sample2 -> 2
-sample3 -> 3
-sample4 -> 0
-*/
