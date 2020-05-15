@@ -38,25 +38,25 @@ El proyecto está organizado de la sigueinte forma:
 Para compilar el código fuente:
 
 ```
-g++ src/main.cpp -o bin/algo3-tp1
+g++ src/main.cpp -o algo3-tp1
 ```
 
 Para ejecutar:
 
 ```
-./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
+./algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 ```
 
 Se puede ejecutar ambos comandos en una sola sentencia:
 
 ```
-g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 RUTA_A_ENTRADA ALGORITMO
+g++ src/main.cpp -o algo3-tp1 && ./algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 ```
 
 Ejemplo:
 
 ```
-g++ src/main.cpp -o bin/algo3-tp1 && ./bin/algo3-tp1 ./input/sample2 3 0
+g++ src/main.cpp -o algo3-tp1 && ./algo3-tp1 ./input/sample2 3 0
 ```
 
 ## Experimentacion
