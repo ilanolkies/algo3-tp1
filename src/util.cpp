@@ -26,10 +26,6 @@ int help() {
     << "     |                 1: Fuerza bruta                                            |." << endl
     << "     |                 2: Backtracking                                            |." << endl
     << "     |                 3: Programación dinámica                                   |." << endl
-    << "     |             - MODO si usa i o retorna resultado                            |." << endl
-    << "     |                    (variacion de implementaciones)                         |." << endl
-    << "     |                    0 o vacio es sin i y reverse                            |." << endl
-    << "     |                    1 es con i                                              |." << endl
     << "     |    ________________________________________________________________________|___" << endl
     << "     |   /                                                                           /." << endl
     << "      \\_/___________________________________________________________________________/." << endl;
