@@ -69,8 +69,8 @@ int main (int argc, char *argv[]) {
       result = bt(R, 0, 0);
       break;
     case 3:
-      M = vector<vector<int> >(n, vector<int>(R+1, -1));
-      result = PD(R, 0);
+      M = vector<vector<int> >(n, vector<int>(R+1, UNDEF));
+      result = pd(R, 0);
       break;
     default:
       return invalidInput();
