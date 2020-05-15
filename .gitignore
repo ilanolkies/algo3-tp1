@@ -1,4 +1,2 @@
-bin/*
-!bin/.gitkeep
-instancias/*/*.in
 .ipynb_checkpoints
+bin
