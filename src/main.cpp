@@ -58,33 +58,33 @@ vector<int> w;
 vector<int> r;
 int n;
 /* Fuerza bruta */
-int FB(int R, int i, int c) {
+int FB(int h, int i, int c) {
   if(i == n){  // caso base
-    if(R >= 0) return c; // instancia válida
+    if(h >= 0) return c; // instancia válida
     return 0;
   }
 
   return max(
-    FB(R, i + 1, c),
-    FB(min(R - w[i], r[i]), i + 1, c + 1)
+    FB(h, i + 1, c),
+    FB(min(h - w[i], r[i]), i + 1, c + 1)
   );
 }
 
 /* Backtracking */
 int k = 0; // largo de secuencia mas optima encontrada
 
-int BT(int R, int i, int c) {
-  if(R < 0) return 0; //  poda por factibilidad
-
-  if(i == n) return c; // caso base instancia válida
+int BT(int h, int i, int c) {
+  if(h < 0) return 0; //  poda por factibilidad
 
   if(c + (n - i) < k) return 0;  // poda por optimalidad
+
+  if(i == n) return c; // caso base instancia válida
 
   if(c >= k) k = c; // actualizacion de secuencia mas optima
 
   return max(
-    BT(R, i + 1, c),
-    BT(min(R - w[i], r[i]), i + 1, c + 1)
+    BT(h, i + 1, c),
+    BT(min(h - w[i], r[i]), i + 1, c + 1)
   );
 }
 
@@ -134,17 +134,17 @@ int PDit(int R) {
 
 const int UNDEFINED = -1;
 const int MENOS_INFTY = -999999999;
-int PD(int R,  int i) {
-  if(R < 0) return MENOS_INFTY; // instancia inválida
+int PD(int h,  int i) {
+  if(h < 0) return MENOS_INFTY; // instancia inválida
   if(i == n) return 0; // caso base instancia válida
 
-  if(M[i][R] == UNDEFINED){
-    M[i][R] = max(
-      PD(R, i + 1),
-      1 + PD(min(R - w[i], r[i]), i + 1)
+  if(M[i][h] == UNDEFINED){
+    M[i][h] = max(
+      PD(h, i + 1),
+      1 + PD(min(h - w[i], r[i]), i + 1)
     );
   }
-  return M[i][R];
+  return M[i][h];
 }
 
 int main (int argc, char *argv[]) {
