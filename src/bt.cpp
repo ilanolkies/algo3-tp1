@@ -15,17 +15,24 @@ int bt(int h, int i, int c) {
 }
 
 int bt_mod(int h, int i, int c) {
-
-  if(poda_factibilidad && h < 0) return 0; // poda por factibilidad
-  if(poda_optimalidad && c + (n - i) < k) return 0; // poda por optimalidad
-
-  if(i == n && h >= 0) return c; // instancia valida
+  if(poda_factibilidad && h < 0) {
+    cout << "fact";
+    return 0; // poda por factibilidad
+  }
+  if(poda_optimalidad && c + (n - i) < k) {
+    cout << "opt";
+    return 0; // poda por optimalidad
+  }
+  if(i == n){ // caso base
+    if(h >= 0) return c; // instancia valida
+    return 0; // instancia invalida
+  }
 
   if(c >= k) k = c; // actualizacion de secuencia mas optima
 
   return max(
-    bt(h, i + 1, c),
-    bt(min(h - w[i], r[i]), i + 1, c + 1)
+    bt_mod(h, i + 1, c),
+    bt_mod(min(h - w[i], r[i]), i + 1, c + 1)
   );
 }
 
