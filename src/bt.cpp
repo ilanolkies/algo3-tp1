@@ -1,4 +1,4 @@
-int k = 0; // largo de secuencia mas optima encontrada
+int k = 0; // largo de secuencia optima encontrada
 
 int bt(int h, int i, int c) {
   if(h < 0) return 0; // poda por factibilidad
