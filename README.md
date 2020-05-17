@@ -30,7 +30,6 @@ Implementamos 3 algoritmos en C++ para resolver este problema:
 El proyecto está organizado de la sigueinte forma:
 
 - `/src` contiene el código fuente
-- En `/bin` guardaremos los binarios
 - `/input` contiene entradas válidas
 - `/instancias` tiene las instancias generadas para la experimentacion
 - `/notebooks` tiene los experimentos ejecutados. Ver [experiments](#experimentos)
