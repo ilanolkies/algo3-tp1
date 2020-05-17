@@ -6,7 +6,7 @@ int bt(int h, int i, int c) {
 
   if(i == n) return c; // caso base instancia válida
 
-  if(c >= k) k = c; // actualizacion de secuencia mas optima
+  if(c >= k) k = c; // actualizacion de secuencia optima
 
   return max(
     bt(h, i + 1, c),
@@ -23,7 +23,7 @@ int bt_mod(int h, int i, int c) {
   if(poda_factibilidad && h < 0) return 0; // poda por factibilidad
   if(poda_optimalidad && c + (n - i) < k) return 0; // poda por optimalidad
 
-  if(c > k && h >= 0) k = c; // actualizacion de secuencia mas optima en caso posible
+  if(c > k && h >= 0) k = c; // actualizacion de secuencia optima
 
   return max(
     bt_mod(h, i + 1, c),
