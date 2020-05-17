@@ -119,7 +119,7 @@ jupyter notebook notebooks/
 - Experimento 3.1: Comparacion entre algoritmos - `Comparacion`
 - Experimento 3.2: Complejidad de fuerza bruta - `ComplejidadFuerzaBruta`
 - Experimento 3.3: Efectividad de las podas de backtracking - `podas`
-- Experimento 3.4: Orden de productos vs. backtracking con distintas podas - `podas`
+- Experimento 3.4: Orden de productos vs. backtracking con distintas podas - `podasOrdenadas`
 - Experimento 3.5: Complejidad de programación dinamica -  - `ComplejidadDinamica`
 
 ## Ayuda
