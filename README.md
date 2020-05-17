@@ -32,6 +32,8 @@ El proyecto está organizado de la sigueinte forma:
 - `/src` contiene el código fuente
 - En `/bin` guardaremos los binarios
 - `/input` contiene entradas válidas
+- `/instancias` tiene las instancias generadas para la experimentacion
+- `/notebooks` tiene los experimentos ejecutados. Ver [experiments](#experimentos)
 
 ## Algoritmos
 
@@ -47,6 +49,12 @@ Para ejecutar:
 ./algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 ```
 
+- 1: fuerza bruta
+- 2: backtracking
+- 3: programacion dinamica
+- 4: backtracking sin poda de optimalidad
+- 5: backtracking sin poda de factbilidad
+
 Se puede ejecutar ambos comandos en una sola sentencia:
 
 ```
@@ -56,7 +64,7 @@ g++ src/main.cpp -o algo3-tp1 && ./algo3-tp1 RUTA_A_ENTRADA ALGORITMO
 Ejemplo:
 
 ```
-g++ src/main.cpp -o algo3-tp1 && ./algo3-tp1 ./input/sample2 3 0
+g++ src/main.cpp -o algo3-tp1 && ./algo3-tp1 ./input/sample2 3
 ```
 
 ## Experimentacion
@@ -101,21 +109,6 @@ Para usar Python v3.6.5
   pip install -r requirements.txt
   ```
 
-## Scripts
-
-Se corren desde el root del repo.
-
-### Aleatorio
-
-`python ./scripts/aleatorio.py` crea 100 instancias aleatorias en `./instancias/aleatorio`
-
-Parametros:
-
-- ![formula](https://render.githubusercontent.com/render/math?math=R) de 500 a 1000
-- ![formula](https://render.githubusercontent.com/render/math?math=n=100)
-- ![formula](https://render.githubusercontent.com/render/math?math=w_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
-- ![formula](https://render.githubusercontent.com/render/math?math=r_i) de 1 a 11 ![formula](https://render.githubusercontent.com/render/math?math=\forall%20i%20=%201%20\dots%20n)
-
 ## Notebooks
 
 Abrir notebooks con
@@ -124,7 +117,11 @@ Abrir notebooks con
 jupyter notebook notebooks/
 ```
 
-- `Aleatorio` prueba con instancias aleatorias.
+- Experimento 3.1: Comparacion entre algoritmos - `Comparacion`
+- Experimento 3.2: Complejidad de fuerza bruta - `ComplejidadFuerzaBruta`
+- Experimento 3.3: Efectividad de las podas de backtracking - `podas`
+- Experimento 3.4: Orden de productos vs. backtracking con distintas podas - `podas`
+- Experimento 3.5: Complejidad de programación dinamica -  - `ComplejidadDinamica`
 
 ## Ayuda
 
